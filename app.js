@@ -68,7 +68,7 @@ app.get("/people", async (req, res) => {
 });
 
 mongoose.connect(
-  "mongodb://172.17.0.2:27017/swfavorites", // IPAddress belongs to mongodb container.
+  "mongodb://mongodb:27017/swfavorites", // In here `mongodb:27017`, this `mongodb` is container's name.
   { useNewUrlParser: true },
   (err) => {
     if (err) {

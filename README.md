@@ -1,9 +1,9 @@
 ## In this app, we are connecting web-app and mongodb
 
-Steps to communicate between two docker containers:
+Elegant Container to Container communication:
 
-1. Run mongodb: `docker run mongo` or `docker run -d mongo` or `docker run --name mongodb -d mongo`
-2. Now, run the inspect command to see IPAddress of the mongo container: `docker inspect <CONTAINER_ID/NAME>`
-3. Inside `NetworkSettings`, you will see a `IPAddress` key, which is the IP address / host the container app is running. (For me, IPAddress of mongodb is `172.17.0.2`)
-4. Now, paste this IP address in the mongodb connection URL and build the docker image and run container by the image we have created.
-5. Finally, open Postman and send request to the web-server APIs, it will communicates with the mongo server, returns a response to web-server and web-server sends a response to client postman.
+1. Create a network: `docker network create <NETWORK_NAME>`. Example: `docker network create app-network`
+
+2. Run mongo image using network tag: `docker run -d --rm --name mongodb --network app-network mongo`. Make sure to remember this container name `mongodb`, because we replace this container name in place of mongodb connection ip address area.
+
+3. Run this app's image: `docker run -d --rm --name web-app --network app-network -p 3000:3000 doc-net-01`
